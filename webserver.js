@@ -1,4 +1,5 @@
 const net = require('net');
+const fs = require('fs');
 
 // SOCKET CONNECTION
 const server = net.createServer((socket) => {
@@ -8,9 +9,13 @@ const server = net.createServer((socket) => {
     const request = parseRequest(requestString);
     console.log(request.method, request.path, request.protocol)
     
-    if (request.method === "GET" && request.path === "/") {
+    if (request.method === "GET") {
       // respond with a HTTP response
-      socket.write("HTTP/1.0 200 OK");
+      if (fs.existsSync(`.${request.path}`)) { // "./path" so it looks in current directory
+        socket.write("HTTP/1.0 200 OK\n");
+      } else {
+        socket.write("HTTP/1.0 404 NOT FOUND\n");
+      } 
     }
   })
 })
