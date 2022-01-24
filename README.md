@@ -1,4 +1,4 @@
-### Run Server
+### Run simple_server.rb
 ```
 $ brew install telnet
 ```
