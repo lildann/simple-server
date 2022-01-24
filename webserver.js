@@ -1,12 +1,30 @@
 const net = require('net');
 
+// SOCKET CONNECTION
 const server = net.createServer((socket) => {
   socket.on("data", (buffer) => {
     const requestString = buffer.toString('utf-8')
 
+    const request = parseRequest(requestString);
+    console.log(request.method, request.path, request.protocol)
     console.log(requestString);
   })
 })
+
+// FUNCTION TO EXTRACT REQUEST DATA
+const parseRequest = (requestString) => {
+  const [method, path, protocol] = requestString.split(" ");
+  // syntax for creating three different variables from the split request string
+  return {
+    method,
+    path,
+    protocol
+  }
+  // request object returned
+
+
+
+}
 
 server.listen(9999, () => console.log("Listening ****"))
 
