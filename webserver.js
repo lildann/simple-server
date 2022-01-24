@@ -7,7 +7,11 @@ const server = net.createServer((socket) => {
 
     const request = parseRequest(requestString);
     console.log(request.method, request.path, request.protocol)
-    console.log(requestString);
+    
+    if (request.method === "GET" && request.path === "/") {
+      // respond with a HTTP response
+      socket.write("HTTP/1.0 200 OK");
+    }
   })
 })
 
